@@ -20,5 +20,5 @@ jobs:
     steps:
       - uses: 'Terracotta-OSS/terracotta-actions/bob-enqueue@main'
         with:
-          queue_token: '${{ secrets.BOB_QUEUE_TOKEN }}'
+          queue_token: '${{ secrets.BOB_ENQUEUE_PR_REVIEW }}'
           comment:     '${{ github.event.comment.body }}'
