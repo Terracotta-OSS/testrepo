@@ -1,0 +1,24 @@
+
+name: 'Bob PR Review'
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  enqueue:
+    name: 'Enqueue Bob job'
+    if: |-
+      github.event.sender.type == 'User' &&
+      contains(github.event.comment.body, '@bobshell') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: 'Terracotta-OSS/terracotta-actions/bob-enqueue@main'
+        with:
+          queue_token: '${{ secrets.BOB_QUEUE_TOKEN }}'
+          comment:     '${{ github.event.comment.body }}'
